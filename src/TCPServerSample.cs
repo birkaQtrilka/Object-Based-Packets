@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Net;
-using System.Collections.Generic;
-using shared;
-using System.Threading;
 using shared.src;
 using System.Collections.ObjectModel;
 using server.src;
-using System.Text;
 using shared.src.serialization;
 using shared.src.protocol;
+using shared;
 
 /**
  * This class implements a simple tcp echo server.
@@ -38,6 +35,37 @@ class TCPServerSample
 		_listener = new TcpListener(IPAddress.Any, 55555);
 		_listener.Start();
         rooms.Add( lobbyRoom.Name, lobbyRoom);
+
+        //var msg = new JoinResponse()
+        //{
+        //    playerInfo = new PlayerInfo()
+        //    {
+        //        ID = 1,
+        //        AvatarView = 1,
+        //        Name = "fwjwf"
+        //    },
+        //    PlayerInfos = new()
+        //    {
+        //        List = new()
+        //        {
+        //            new PlayerInfo()
+        //            {
+        //                ID = 2,AvatarView = 2, Name = "wgeg"
+        //            },
+        //            new PlayerInfo()
+        //            {
+        //                ID = 3, AvatarView = 3, Name = "gge"
+        //            },
+        //        }
+        //    }
+        //};
+
+        //var writePack = new Packet();
+        //writePack.Write(msg);
+
+        //var readPack = new Packet(writePack.GetBytes());
+        //var obj = readPack.ReadObject();
+
 		while (true)
 		{
 			ProcessNewClients();
@@ -61,13 +89,15 @@ class TCPServerSample
 	{
 		while (_listener.Pending())
 		{
-            var newClient = new GameClient(_listener.AcceptTcpClient(), "Guest " + ++_currentClientID, _currentClientID);
+            var newClient = new GameClient(_listener.AcceptTcpClient(), _currentClientID++);
 
             lobbyRoom.AddMember(newClient);
             
 			Console.WriteLine("Accepted new client.");
 		}
 	}
+
+    
 
 	static void ProcessExistingClients()
 	{

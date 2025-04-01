@@ -36,7 +36,7 @@ public abstract class Room(string name)
     {
         _clients.Add(client);
         OnPlayerJoined(client);
-        Console.WriteLine($"{client.Name} joined the room: {Name}");
+        Console.WriteLine($"{client.Info.Name} joined the room: {Name}");
 
     }
 
@@ -44,7 +44,7 @@ public abstract class Room(string name)
     {
         _clients.Remove(client);
         OnPlayerLeft(client);
-        Console.WriteLine($"{client.Name} left the room: {Name}");
+        Console.WriteLine($"{client.Info.Name} left the room: {Name}");
     }
 
     protected virtual void OnPlayerLeft(GameClient player)
