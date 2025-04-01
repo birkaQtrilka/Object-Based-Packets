@@ -64,7 +64,7 @@ class TCPServerSample
             var newClient = new GameClient(_listener.AcceptTcpClient(), "Guest " + ++_currentClientID, _currentClientID);
 
             lobbyRoom.AddMember(newClient);
-            newClient.SendMessage(new JoinResponse() { ID = newClient.ID, Name = newClient.Name});
+            
 			Console.WriteLine("Accepted new client.");
 		}
 	}
